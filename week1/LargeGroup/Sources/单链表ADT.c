@@ -10,13 +10,19 @@ struct date{
 
 //创建链表的函数
 int n=0;			//一个数n用于判断该结点是否为头结点，n=0表示头结点，其余不为头结点 
+int y;				//y用于判断scanf的值，用于判断是否输入了错误类型的数据 
 struct date * creat(){
 	struct date*head,*p1,*p2;
 	head=NULL;
 	n=0;
 	p1=p2=(struct date *)malloc(LEN);		//开辟一块空间
 	printf("请输入数字(输入-1退出输入):");
-	scanf("%d",&p1->num);
+	y=scanf("%d",&p1->num);
+	while(y==0){
+	printf("您的输入有误！请重新输入！\n");
+	fflush(stdin);
+	y=scanf("%d",&p1->num);
+}
 	while(p1->num!=-1){						//如果数据为-1，则立刻退出输并返回head
 		if(n==0){							//n=0，表示头结点，设置头结点 
 			head=p1;
@@ -29,7 +35,13 @@ struct date * creat(){
 		n++;
 		p1=(struct date*)malloc(LEN);		//继续开辟空间 
 		printf("请继续输入："); 
-		scanf("%d",&p1->num);
+		y=0;
+		y=scanf("%d",&p1->num);
+	while(y==0){
+	printf("您的输入有误！请重新输入！\n");
+	fflush(stdin);
+	y=scanf("%d",&p1->num);
+}
 	}
 	 return head;
 } 
@@ -43,14 +55,24 @@ void add(struct date*head){
 	p1=head;
 	int count1,count2=1;				//count1用于记录新增数据的位置，count2通过++来到达要count1的位置(即要添加数据的位置) 
 	printf("请输入要添加数据的节点位置：\n");
-	scanf("%d",&count1);
+	y=scanf("%d",&count1);
+	while(y==0){
+	printf("您的输入有误！请重新输入！\n");
+	fflush(stdin);
+	y=scanf("%d",&count1);
+}
 	if(count1<0||count1>n){				//判断count1的值，不能为负数(结点数不能为负数)，或大于总的结点数(即n的值)
 		printf("您所输入的信息有误！");
 		return ; 
 	} 
 	p2=(struct date*)malloc(LEN);
 	printf("请输入要添加的数据:\n");
-	scanf("%d",&p2->num);
+		y=scanf("%d",&p2->num);
+	while(y==0){
+	printf("您的输入有误！请重新输入！\n");
+	fflush(stdin);
+	y=scanf("%d",&p2->num);
+}
 	while(count2 < count1){
 		p1=p1->next;					//count2通过++来到达要count1的位置(即要添加数据的位置) 
 		count2++;
@@ -69,7 +91,12 @@ struct date * delete(struct date*head){
 	struct date*p1,*p2;
 	p1=head;
 	printf("请输入要删除的结点数据:\n");
-	scanf("%d",&count1);
+		y=scanf("%d",&count1);
+	while(y==0){
+	printf("您的输入有误！请重新输入！\n");
+	fflush(stdin);
+	y=scanf("%d",&count1);
+}
 		if(p1==head&&p1->num==count1){		//如果是头结点要删除，对应操作 
 			p1=p1->next;
 			head=p1;
@@ -108,13 +135,23 @@ void revise(struct date*head){
 	p1=head;
 	int count1,count2=1,num;		//count1用于记录修改数据的位置，count2通过++来到达要count1的位置(即要修改数据的位置)，num为修改后的数据 
 	printf("请输入要修改数据的节点位置：\n");
-	scanf("%d",&count1);
+		y=scanf("%d",&count1);
+	while(y==0){
+	printf("您的输入有误！请重新输入！\n");
+	fflush(stdin);
+	y=scanf("%d",&count1);
+}
 	if(count1<0||count1>n){			//判断count1的值，不能为负数(结点数不能为负数)，或大于总的结点数(即n的值)
 		printf("您所输入的信息有误！");
 		return ; 
 	} 
 	printf("请输入修改后的数据:\n");
-	scanf("%d",&num);
+	y=scanf("%d",&num);
+	while(y==0){
+	printf("您的输入有误！请重新输入！\n");
+	fflush(stdin);
+	y=scanf("%d",&num);
+}
 	while(count2 < count1){			//找到count1的位置 
 		p1=p1->next;
 		count2++;
@@ -254,7 +291,11 @@ int main(){
 	printf("9.exit\n\n");
 	printf("****************************************\n\n");
 	printf("请输入指令：\n");
-	scanf("%d",&x);
+	y=scanf("%d",&x);
+	if(y==0){
+		fflush(stdin);
+		x=0;
+	}
 	switch(x) {
 		case 1:head=creat();
 				print(head);
